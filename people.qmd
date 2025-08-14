@@ -1,0 +1,21 @@
+---
+title: "Meet the People"
+---
+
+## Professor Joshua Brake [](https://joshbrake.com/about/){.external target="_blank"}
+
+![](joshbrake.jpg){width=65%}
+
+Professor Joshua Brake is the Principal Investigator (PI) for the Biophotonics Lab. He is an Assistant Professor in the Engineering Department at Harvey Mudd College. His curriculum focuses on digital electronics and embedded systems while his research revolves around the application of optics. He also has his own blog called The Absent-Minded Professor where he posts on the intersections between technology and education [](https://joshbrake.substack.com/){.external target="_blank"}. 
+
+## Erin Wang
+
+![](erinwang.JPG){width=65%}
+
+Erin Wang is a senior at Harvey Mudd college studying as an engineering major. She has worked in the Biophotonics lab for two years, contributing to the design and build of the interferometry setups, the programs for collecting data, and the analysis of the collected data. Her concentration and expertise is in electrical and mechanical engineering, and she plans to pursue a Masters degree after college and a career in mechatronics and robotics. Outside of engineering, she loves composing music and dancing as well as discovering new restaurants to try. 
+
+## Grey Seymour
+
+![](greyseymour.jpg){width=65%}
+
+Grey is a sophomore at Harvey Mudd College completing a Joint Major in Chemistry and Biology with an Emphasis in Environmental Analysis. He has worked in the Biophotonics Lab under Professor Joshua Brake for one year. His contributions to the project involve creating the Arabidopsis growth protocol and growth of plant samples for incorporation into optical systems. He hopes to work in sustainability research after graduation.

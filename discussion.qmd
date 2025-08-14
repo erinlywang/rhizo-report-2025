@@ -1,0 +1,10 @@
+---
+title: "Discussion & Future Work"
+bibliography: references.bib
+---
+
+## 4.1 Arabidopsis
+Certain challenges concerning wet lab access and access to an adequate growth environment for the Arabidopsis samples impeded our progress. Growth of the plant samples did not begin until the beginning of July. In the future, an antibiotic such as kanamycin should be used in the liquid plant media to prevent bacterial growth, as both initial batches of Arabidopsis were contaminated by mold.
+
+## 4.2 LCI Setup
+The results of the stage sweeps for the Low Coherence Interferometer setup suggest that we are not sweeping a large enough range to visualize an interference peak. From position -25 to 25 there appears to be an increasing trend towards the end, zooming out to range -100 to 100 shows no increasing pattern. Because the test results were inconclusive in detecting an interference pattern, future iterations of sweep testing call for capturing the complete range of the translation stage. Due to complications with the size of the full range data, the next steps are to scan the whole range in sizable chunks that the program can save. A further issue that may interfere with accuracy in scanning the whole range in parts is that the piezo motor works with open-loop control meaning that the motor moves based on a set zero position from the user and does not internally determine the zero. This means that the position reported from the piezo motor is susceptible to changes in absolute distance. This issue could be resolved by connecting the piezo motor to a distance sensor to create a closed-loop controlled system. We also aim to conduct a noise analysis of the system by measuring the photodiode’s dark current noise and the shot noise of the system. For dark current noise analysis, we will take multiple trials with the laser and lights off to measure the photodiode’s variance in darkness. For shot noise, we will capture multiple trials with the stage at a constant position to measure the noise that originates from the discrete nature of electrical charge. 

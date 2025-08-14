@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Monitoring the Rhizosphere: Summer 2025 Report"
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.qmd
+      - text: People
+        href: people.qmd
+    background: "#769A62"      
+  sidebar:
+    style: "docked"
+    search: false
+    contents:
+      - text: "Introduction"
+        href: introduction.qmd
+      - text: "Methods & Analysis"
+        href: method.qmd
+      - text: "Results"
+        href: results.qmd
+      - text: "Discussion"
+        href: discussion.qmd      
+      - text: "Appendices"
+        href: appendix.qmd
+      
+
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+    math:
+      method: mathjax
+      options:
+        autoNumber: "AMS"
+      citations: true
+    link-external-icon: true
+    code-line-numbers: true
+
+
+
