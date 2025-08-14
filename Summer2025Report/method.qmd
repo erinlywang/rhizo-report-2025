@@ -1,0 +1,293 @@
+---
+title: "Methods"
+bibliography: references.bib
+jupyter: python3
+code-block-bg: true
+code-block-border-left: "#5F8356"
+---
+For a list of materials used and their sources see Appendix A. 
+
+## 2.1 Arabidopsis Setup
+*Arabidopsis thaliana* was used as a plant model for integration into the low-coherence interferometry setup. Arabidopsis is a model organism, meaning that the majority of gene families present in the Arabidopsis genome are present in other flowering plants, thus their gene functions are often similar (see @fig-genes). This means that conclusions drawn from research utilizing Arabidopsis as a model organism are often applicable to other flowering plants [@woodward_biology_2018].
+
+![A diagram demonstrating the overlap between gene families of Arabidopsis and other similar flowering plants. Approximately two-thirds of Arabidopsis gene families overlap between all of these plant species [@paterson_sorghum_2009].](genefamilies.png){#fig-genes width=50%}
+
+Arabidopsis also has a characteristic root structure that integrates well with the interferometry setup, which is a larger, primary root with smaller roots branching off (see @fig-scan).
+
+![A scanned image of Arabidopsis roots grown in a Standard Murashige and Skoog (MS) medium [@estevez_salt-stress_2015].](duandinneny.png){#fig-scan width=35%}
+
+In the low-coherence interferometry setup, a section of the primary root will be used such that the near-infrared beam may pass through the single root. This allows for examination of the light-piping properties of a single Arabidopsis root.
+
+![The drawn out protocol for growing the Arabidoposis roots in a wet lab.](rootprocess.png){#fig-protocol}
+
+As seen in @fig-protocol, preparing liquid media for plant growth required 0.43 grams of Murashige & Skoog (MS) basal salt media, and 2 grams of sucrose to be mixed into a 25lmL beaker containing 100mL MQ water using a stir bar. Using a pH probe, 0.1M KOH was added until the solution was a pH of 6.0, 4 grams of agar powder, 100mL MQ water, and 0.1M KOH added dropwise for pH adjustment to 6.0, since optimal pH range for plant growth is 6.0-7.5. After pH adjustment, this solution was added to a 150mL Erlenmeyer flask containing 4g of LB agar powder, mixed, and autoclaved for 20 minutes on a liquid cycle.
+
+After sterilization in the autoclave, the 100mLs of liquid media were poured into four clean plates in a sterile environment before being covered with an opaque material and allowed to set and cool overnight. The next morning they were placed upside-down in a refrigerator at 4°C for 24 hours.
+
+Arabidopsis seeds were rinsed in a seed sterilization buffer containing 50μL of 10X Triton (diluted from 100X Triton) and 10mL of 70% ethanol. They were then rinsed twice in MQ water before being plated onto the agar plates. Six seeds were placed on each plate and they were left to germinate at 4°C in the dark for 1-2 days before being incubated in a Vivosun growth chamber at 21-22°C, 65-70% humidity, and a 12 hours light/12 hours dark light cycle. The plants continued to grow on agar plates. The Vivosun growth chamber elements used were a 2x2 growth tent, the AeroStream U075 750ml USB Humidifier, and the AeroWave D4 4” clip fan, as well as a Bluetooth thermometer/hygrometer (see @fig-tent).
+
+![The plant growth tent setup used to house the seeded agar plates. The setup includes a reflective tent, a fan, an overhanging light, and a humidifier sourced from Vivosun. The agar plate holder was designed on Solidworks and 3D-printed on Harvey Mudd's makerspace printers.](tentsetup.png){#fig-tent width=50%}
+
+## 2.2 LCI Setup
+
+### 2.2.1 Interferometer Materials
+![A drawing of the Low Coherence Interferometer (LCI) setup with an 850 nm super luminescent diode (SLD) feeding into a polarizer, then split 50:50 by a 2x2 coupler into a sample and reference beam that when reflected recombine into the photodiode (PD). The signal is then fed into a photodiode amplifier (PA), read by the data acquistion device (NiDAQ), and saved on the computer through code.](lcidrawing.png){#fig-lcidrawing}
+
+As shown in @fig-lcidrawing, the interferometry system used a super luminescent diode (SLD) with a nominal wavelength of 850 nm and maximum power of 20 mW as the broadband low coherence light source. This light was then fed into a 2x2 coupler via an FC/APC fiber that splits the incoming light 50:50 into a sample beam and a reference beam. The sample beam and reference beam were collimated using a fiber collimation package with a Numerical Aperture of 0.15 (NA = 0.15) and a focal length of 18.45 mm. The collimated reference beam enters free space and then is reflected off a total internal reflection (TIR) retroreflector back into the collimator and into the fiber. The collimated sample beam enters free space and is reflected back off the sample back into the fiber to then interfere with the returning reference beam. The combined beam returns to the 2x2 coupler where the beam is split 50:50 once more with half of the beam being sent back to the source and the other half of the beam being sent to a large area SI detector with an active area of 75.4 mm2 to measure the intensity of the interference signal.
+
+![A labeled picture of the in-lab LCI setup. The sample in this setup is a TIR retroreflection with an AR coating for 350-700 nm.](lcipicture.png){#fig-lciphoto}
+
+With the following setup pictured in @fig-lciphoto, the detector will only measure a peak in interference when the reference beam is within wavelengths with the light reflected from the sample. The reflected beam from each reflective surface of the sample can then be matched in path length by sweeping the reference mirror/retroreflector. Due to the SLD’s small coherence length of 13 um, the reference mirror needed to be on a programmable translation stage. An extra manual stage was added to the sample and underneath the translation stage holding the retroreflector for ease of alignment. Alignment of the reference retroflector required blocking the path between the output beam from the sample collimator path and the sample, tweaking the position and angle of the retroreflector, and using a power meter in place of the detector in order to visualize and maximize the power output from the reference beam. This process was then repeated for the sample beam by blocking the reference retroreflector instead. Initial sweeps were taken without the Arabidopsis root sample present to find the SLD’s small coherence length before testing with plant sample present. 
+
+All materials were sourced from Thorlabs.
+
+### 2.2.2 LCI Hardware
+The data is measured as a voltage whereas we are concerned with the incident power onto the photodiode to delineate information about the intensity of the interference signal. The hardware is where the conversion from power to voltage occurs. This section depicts the conversion from the measured voltage back to incident power. 
+
+The setup uses a NiDAQ instrument to acquire the data as a measured voltage. The voltage signal (red cable) is connected to analog input AI1 whereas the reference ground (black cable) is connected to analog ground AIGND. The voltage signal and reference ground is collected from the photodiode amplifier.
+
+The PDA200C Photodiode Amplifier (PA) reads the signal from a DET100A2 photodiode (PD) as a current and then outputs a voltage with a set conversion scale. 
+
+#### PA Voltage to PD Current
+
+The analog output of the PA conversion depends on the current range and resolution that is manually set on the PA (see @fig-conversion). 
+
+![Analog Output Conversion Table from PDA200C datasheet](paconversion.png){#fig-conversion}
+
+For our setup, the PA was set to a resolution of 1 nA for a signal within the 10µA current range, meaning the Conversion Coeff used was 1x10^6^ V/A. Using the conversion coefficient and the current range, we can calculate from the output voltage measured what the current seen on the PA is. Connecting to the PA with the PD darkened completely allows the PA to offset the dark current from the photodiode. Thus, the measured voltage can be converted directly to the PD current (I~pd~) without needing to calculate the dark current. 
+
+#### PD Current to Incident Power
+
+The PA can directly convert to power but because the photodiode’s responsivity can change based on light wavelength, it is good to check the power with hand calculations. To calculate power from the PD, we estimate the responsivity from the DET100A2 datasheet for our SLD with wavelength of 850nm to be approximately 0.65. 
+
+We can then calculate power using the relationship between responsivity, I~pd~, and power derived from the DET100A2 datasheet (see @eq-power).
+
+$$ 
+P_{incident} = \frac{R(\lambda)}{I_{PD}}    
+$$ {#eq-power}
+
+### 2.2.3 LCI Software
+The Python packages nidaqmx and pylablib were used to connect to the NiDAQ and the Kinetic Piezo motor that translates the stage housing the reference mirror back and forth. Initial data was taken on the NiDAQ with a sampling frequency of 1 MHz with 1000 samples per channel. Given a start and end positional value for the Kinesis Motor, the software program moved the motor from start to end position, pausing at each integer positional value to read all available samples in the NiDAQ channel. These samples would then be averaged and stored as the voltage of the interference signal at that motor position for the trial. For multiple trials, the program swept the reference mirror from start to end position before repeating the cycle from start to end position for the provided number of trials. The program then took the average and the standard deviation of the voltages stored at each position for each trial to produce a list of trial averaged voltages at each position, The program then plotted the trial averaged voltages with the standard deviation as error bars on a graph with the motor position as the independent axis and measured voltage as the dependent axis. With only one trial, the plot would be the averaged voltages of all the read samples for each position for the one trial with no error bars due to a standard deviation of zero.
+
+```{.python filename="LCISweepCONTINUOUS.py"}
+from pylablib.devices import Thorlabs
+import nidaqmx
+from nidaqmx.constants import TerminalConfiguration, AcquisitionType, READ_ALL_AVAILABLE
+import matplotlib.pyplot as plt
+import csv
+import numpy as np
+import os
+import time
+from datetime import datetime
+from scipy.fft import fft, fftfreq
+from scipy.optimize import curve_fit
+
+def create_folder(folder_name):
+    try:
+        os.mkdir(folder_name)
+        print(f"Folder '{folder_name}' created successfully.")
+    except FileExistsError:
+        print(f"Folder '{folder_name}' already exists.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+def move_to_folder(folder_name):
+    try:
+        os.chdir(folder_name)
+        print(f"Current directory changed to: {os.getcwd()}")
+    except FileNotFoundError:
+        print(f"Folder '{folder_name}' not found.")
+    except NotADirectoryError:
+        print(f"'{folder_name}' is not a directory.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+def create_csv_file(filename, fields, datarows):
+    with open(filename, 'w') as csvfile:
+        # create csv writer object
+        csvwriter = csv.writer(csvfile, lineterminator='\n')
+
+        # writing the fields
+        csvwriter.writerow(fields)
+
+        # writing the data rows
+        csvwriter.writerows(datarows)
+
+def take_data():
+    with nidaqmx.Task() as task:
+        task.ai_channels.add_ai_voltage_chan("Dev1/ai1", 
+                                            max_val=10, 
+                                            terminal_config= TerminalConfiguration.RSE)
+
+        task.timing.cfg_samp_clk_timing(1000000, 
+                                        sample_mode=AcquisitionType.FINITE, 
+                                        samps_per_chan=1000)
+        rawdata = task.read(READ_ALL_AVAILABLE)
+    return rawdata
+
+def find_amp(data):
+    sorted_data = sorted(data)
+
+    # calculate minimum average of bottom 100 values
+    averagemin = np.mean(sorted_data[0:99])
+
+    # calculate maximum average of top 100 values
+    averagemax = np.mean(sorted_data[len(sorted_data)-100:len(sorted_data)])
+
+    # calculate amplitude
+    amplitude = averagemax - averagemin
+    return amplitude
+
+def find_average(matrix):
+    # Calculate the average of each row
+    averages = np.mean(matrix, axis=1)
+    avg_amplitudes = list(map(float, averages))
+    return avg_amplitudes
+
+def find_std(matrix):
+    # Calculate the standard deviation of each row
+    std_devs = np.std(matrix, axis=1)
+    std_amplitudes = list(map(float, std_devs))
+    return std_amplitudes
+
+def get_serial(value):
+    devices = Thorlabs.list_kinesis_devices()
+    device_tuple = devices[value]
+    serial = device_tuple[0]
+    return serial
+
+def get_devices():
+    print(Thorlabs.list_kinesis_devices())
+
+## Define class for Kinesis stage
+
+class KinesisStage(Thorlabs.KinesisPiezoMotor):
+    def __init__(self, serial):
+        super().__init__(serial)
+
+    def set_def_channel(self, value):
+        self.set_default_channel(value)
+        print(" Default channel:", value)
+
+    def move_forward(self, value):
+        self.move_by(value)
+        time.sleep(4)
+        print("Stage moved forward by " + str(value) + ".")
+        position = self.get_position()
+        print("Current Position: ", position)
+
+    def move_back(self, value):
+        self.move_by(-value)
+        time.sleep(4)
+        print("Stage moved backward by " + str((-value)) + ".")
+        position = self.get_position()
+        print("Current Position: ", position)
+
+    def zero_position(self):
+        self.move_to(0)
+        time.sleep(4)
+        print("Stage position set to 0.")
+        position = self.get_position()
+        print("Current Position: ", position)
+
+
+# Get serial number of motor
+serial = get_serial(0)
+
+# Make stage object to move stage
+stage = KinesisStage(serial)
+stage.set_def_channel(2)
+
+# Set up how many test and trials and date
+testnum = 1
+trialnum = 1
+date = datetime.now().strftime("%m-%d-%y")
+
+test_folder = "Test " + str(testnum)
+
+create_folder(test_folder)
+move_to_folder(test_folder)
+
+# Set up initial parameters for collecting sweep data
+sample_rate = 1000000  # Sample rate in Hz
+sample_count = 1000  # Number of samples to collect
+
+# setup lists to store data for each input voltage
+trial_var = {}
+N_x = 100
+start_pos = 5000000
+end_pos = start_pos-100000-N_x
+x = np.arange(start_pos, end_pos, -N_x) 
+
+# Set the stage to the initial point
+stage.move_to(start_pos)
+
+
+# setup lists to store fields for csv files
+test_fields = ['x position']
+for number in range(1, trialnum+1):
+    test_fields.append(f'Trial {number}')
+
+test_data = list(x)
+
+current_position = stage.get_position()
+
+trial_data = []
+    
+with nidaqmx.Task() as task:
+    task.ai_channels.add_ai_voltage_chan("Dev1/ai1", 
+                                        max_val=10, 
+                                        terminal_config= TerminalConfiguration.RSE)
+
+    task.timing.cfg_samp_clk_timing(1000000, 
+                                    sample_mode=AcquisitionType.CONTINUOUS, 
+                                    samps_per_chan=50000)
+    
+    task.start()
+    print('Task started.    Data acquiring...')
+    while current_position > end_pos:
+        stage.jog('-')
+        rawdata = task.read(number_of_samples_per_channel=100)
+        rawdata_avg = np.average(rawdata)
+        trial_data.append(rawdata_avg)
+    task.stop()
+    print('Task stopped.')
+
+
+# time.sleep(0.5)
+
+# rawdata = take_data()
+
+
+
+test_data = np.vstack([test_data, trial_data])
+stage.stop()
+
+# Create a csv file with the position and all the trial data
+testfilename = date + '_ALLTRIALSLCISweep_Test' + str(testnum) + '.csv'
+test_datarows = np.transpose(test_data)
+create_csv_file(testfilename, test_fields, test_datarows)
+
+## Find average of all trials
+
+test_data_nox = test_datarows[:,1:]         # removes x position column
+averages = find_average(test_data_nox)
+std_devs = find_std(test_data_nox)
+avg_test_data = np.transpose(np.vstack([list(x),averages,std_devs]))
+
+avgdatafields = ['x position', 'Average Vout [V]', 'Standard Dev [V]']
+avgdataname = date + '_AveragedLCISweep_Test' + str(testnum) 
+avgdatafilename = avgdataname + '.csv'
+create_csv_file(avgdatafilename, avgdatafields, avg_test_data)
+
+# save plot of data for each trial and vin
+plt.figure()
+plt.errorbar(list(x), averages, yerr=std_devs, fmt='o')
+plt.xlabel("x position")
+plt.ylabel('Voltage [V]')
+plt.title("Test " + str(testnum) + ": LCI Sweep Data")
+plt.savefig(avgdataname +'.png')
+# plt.show(block=True)
+
+os.chdir('..')        
+```
